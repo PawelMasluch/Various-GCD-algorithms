@@ -6,6 +6,7 @@
 	
 	Bibliography:
 		1. https://eduinf.waw.pl/inf/alg/001_search/0006.php
+		2. https://en.wikipedia.org/wiki/Euclidean_algorithm (especially, section "Method of least absolute remainders")
 
 */
 
@@ -192,6 +193,25 @@ LL binary_iterational_GCD(LL a, LL b){
 
 
 
+// 9*10^18 >= a,b >= 0 and a+b > 0
+LL least_absolute_remainders_iterational_GCD(LL a, LL b){
+	
+	LL q, r, e, tmp;
+	while( b != 0 ){
+		q = a / b;
+		r = a - q*b; // a mod b
+		e = std::abs( a - (q+1) * b );
+		
+		tmp = std::min( r, e );
+		a = b;
+		b = tmp;
+	}
+	
+	return a;
+}
+
+
+
 int main(){
 	
 	LL a, b;
@@ -225,6 +245,11 @@ int main(){
 	
 	// Binary iterational GCD
 	printf( "Binary iterational GCD: GCD(%lld, %lld) = %lld\n", a, b, binary_iterational_GCD(a, b) );
+	
+	// Least absolute remainders iterational GCD
+	printf( "Least absolute remainders iterational GCD: GCD(%lld, %lld) = %lld\n", a, b, least_absolute_remainders_iterational_GCD(a, b) );
+	
+	// ---------------------
 	
 	return 0;
 }
